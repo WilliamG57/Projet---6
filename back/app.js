@@ -8,7 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const path = require("path");
 const app = express();
 
-// Mongoose connect
+// Mongoose connect 
 mongoose.connect('mongodb+srv://william:gd9XhkpZ5lI9STjb@cluster0.edjmd0v.mongodb.net/?retryWrites=true&w=majority',
 { useNewUrlParser: true,
   useUnifiedTopology: true })
