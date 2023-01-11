@@ -17,8 +17,7 @@ exports.createSauce = (req, res, next) => {
     });
 
     // Sauvegarde de la sauce dans la base de donnée
-    sauce
-        .save()
+    sauce.save()
         .then(() => res.status(201).json({ message: "Sauce enregitsrée !"}))
         .catch((error) => res.status(400).json({ error }));
 }

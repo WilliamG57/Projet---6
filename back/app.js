@@ -9,6 +9,7 @@ const path = require("path");
 const app = express();
 
 // Mongoose connect 
+mongoose.set('strictQuery', false);
 mongoose.connect('mongodb+srv://william:gd9XhkpZ5lI9STjb@cluster0.edjmd0v.mongodb.net/?retryWrites=true&w=majority',
 { useNewUrlParser: true,
   useUnifiedTopology: true })
@@ -31,8 +32,9 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 // gestion images de manière statiques
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/sauces', sauceRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 module.exports = app;
