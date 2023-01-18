@@ -7,9 +7,12 @@ const helmet = require("helmet");
 const mongoSanitize = require('express-mongo-sanitize');
 const path = require("path");
 const app = express();
+const cors = require('cors')
+
+
 
 // Mongoose connect 
-mongoose.set('strictQuery', false);
+// mongoose.set('strictQuery', false);
 mongoose.connect('mongodb+srv://william:gd9XhkpZ5lI9STjb@cluster0.edjmd0v.mongodb.net/?retryWrites=true&w=majority',
 { useNewUrlParser: true,
   useUnifiedTopology: true })
@@ -24,7 +27,7 @@ app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'");
     next();
 });
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(mongoSanitize());
 
