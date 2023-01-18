@@ -8,12 +8,13 @@ const mongoSanitize = require('express-mongo-sanitize');
 const path = require("path");
 const app = express();
 const cors = require('cors')
+require('dotenv').config()
 
 
 
 // Mongoose connect 
-// mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://william:gd9XhkpZ5lI9STjb@cluster0.edjmd0v.mongodb.net/?retryWrites=true&w=majority',
+mongoose.set('strictQuery', false);
+mongoose.connect(`mongodb+srv://${process.env.mongoUserName}:${process.env.mongoPassword}@cluster0.edjmd0v.mongodb.net/?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
 
