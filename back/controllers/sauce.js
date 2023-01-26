@@ -1,9 +1,9 @@
-const Sauce = require('../models/sauce');
-// Module 'file system'
-const fs = require ("fs");
+const Sauce = require('../models/sauce'); //Récupération du model sauce
+const fs = require ("fs"); // Module 'file system' pour gérer les téléchargements et modif d'images
 
 
-// Créer une nouvelle sauce
+
+// Création d'une nouvelle sauce
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -22,8 +22,8 @@ exports.createSauce = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
 }
 
+//Modification d'une sauce
 exports.modifySauce = (req, res, next) => {
-    // on vérifie si la modification concerne le body ou un nouveau fichier image
     const sauceObject = req.file ? 
     {
         ...JSON.parse(req.body.sauce),
@@ -35,15 +35,12 @@ exports.modifySauce = (req, res, next) => {
     .catch(()=> res.status(400).json({ error}))
 };
 
+//Suppression d'une sauce
 exports.deleteSauce = (req, res, next) => {
-    // On identifie la sauce
     Sauce.findOne({_id: req.params.id})
         .then(sauce => {
-    // On récupère l'adresse de l'image
     const filename = sauce.imageUrl.split('/images/')[1];
-    // On la supprime du serveur
     fs.unlink(`images/${filename}`, () => {
-    // On supprime la sauce de la bdd
     Sauce.deleteOne({_id: req.params.id})
         .then(()=> res.status(200).json({ message: 'Sauce supprimée'}))
         .catch(error => res.status(400).json({ error}))
@@ -66,6 +63,7 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 // Like, unlike and dislike
+// On identifie si il s'agit d'un like ou d'un dislike, on push l'user et on incrémente de 1
 exports.likeSauce = (req, res, next) => {
     const like = req.body.like;
     if(like === 1) {
@@ -78,7 +76,7 @@ exports.likeSauce = (req, res, next) => {
         .then(() => res.status(200).json({ message: "Vous n'aimez pas cette sauce" }))
         .catch( error => res.status(400).json({ error}))
 
-    } else { 
+    } else {  // Annuler un like ou un dislike, on incrémente de -1
         Sauce.findOne( {_id: req.params.id})
         .then( sauce => {
             if( sauce.usersLiked.indexOf(req.body.userId)!== -1){

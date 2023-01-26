@@ -1,4 +1,4 @@
-const multer = require ("multer");
+const multer = require ("multer"); //Package pour gérer les fichiers entrant dans les requetes HTTP
 
 // Dictionnaire extensions images
 const MIME_TYPES = {
@@ -14,9 +14,9 @@ const MIME_TYPES = {
     },
     // Nouveau nom pour éviter les doublons
     filename: (req, file, callback) => {
-        const name = file.originalname.split(" ").join("_");
+        const name = file.originalname.split(" ").join("_"); //Remplacement des espaces par des underscore
         const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + "." + extension);
+        callback(null, name + Date.now() + "." + extension); //Nom d'origine + numéro + . + extension
     }
   });
 

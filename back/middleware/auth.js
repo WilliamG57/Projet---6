@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken') //On récupère le package
 
-// Exportation de la fonction d'authentification des tokens afin de vérifier la validité de chaque utilisateur à chaque appel de route
+//On vérifie que l'user de la requète correspond bien à celui du Token, il sera alors autorisé à modifier les données
 module.exports = (req, res, next) => {
     try {
         // Récupération du token
         const token = req.headers.authorization.split(' ')[1]
-        // Décodage
+        // Décodage pour vérifier que le user de la requète correspond bien au token
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET')
          // Récupération du userId encodé à l'interieur
         req.auth = {
