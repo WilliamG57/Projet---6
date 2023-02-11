@@ -24,6 +24,16 @@ exports.createSauce = (req, res, next) => {
 
 //Modification d'une sauce
 exports.modifySauce = (req, res, next) => {
+    Sauce.findOne({_id: req.params.id})
+        .then ((sauce) => {
+            console.log(sauce.userId)
+            console.log(req.auth.userId)
+            if (sauce.userId !== req.auth.userId) {
+                return res.status(403).json({
+                    error: new Error("User non autorisé"),
+                });
+            }
+        })
     const sauceObject = req.file ? 
     {
         ...JSON.parse(req.body.sauce),
